@@ -9,27 +9,26 @@ public class Main {
     }
 
     private static void Metodo5() {
-        Scanner sc = new Scanner(System.in);
         List<Double> notas = new ArrayList<Double>();
+        try (Scanner sc = new Scanner(System.in)) {
+            System.out.println("Entre as notas do aluno: ");
+            while (notas.size() != 4) {
+                try {
+                    int nota = notas.size() + 1;
+                    System.out.printf("Entre a nota %d: ", nota);
+                    double notaValue = sc.nextDouble();
 
-        System.out.println("Entre as notas do aluno: ");
-        while(notas.size() != 4) {
-            try {
-                int nota = notas.size() + 1;
-                System.out.printf("Entre a nota %d: ", nota);
-                double notaValue = sc.nextDouble();
-
-                if (notaValue > 10 || notaValue < 0) {
-                    System.out.println("Nota inválida, a nota só pode ser entre 0 e 10");
-                } else {
-                    notas.add(notaValue);
+                    if (notaValue > 10 || notaValue < 0) {
+                        System.out.println("Nota inválida, a nota só pode ser entre 0 e 10");
+                    } else {
+                        notas.add(notaValue);
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Nota inválida, a nota deve ser um número");
+                    sc.next();
                 }
-            } catch(InputMismatchException e) {
-                System.out.println("Nota inválida, a nota deve ser um número");
-                sc.next();
             }
         }
-        sc.close();
 
         double totalNota = notas.stream().mapToDouble(Double::doubleValue).sum();
         double media = totalNota / notas.size();
